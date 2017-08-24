@@ -6,7 +6,9 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
+import android.text.style.BackgroundColorSpan;
 import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -25,6 +27,8 @@ public class WordToSpan {
     private int colorURL = Color.BLUE;
     private int colorMAIL = Color.BLUE;
     private int colorCUSTOM = Color.BLUE;
+    private int colorHIGHLIGHT = Color.WHITE;
+    private int backgroundHIGHLIGHT = Color.BLUE;
     private String regexCUSTOM = null;
     private boolean underlineTAG = false;
     private boolean underlineMENTION = false;
@@ -32,6 +36,11 @@ public class WordToSpan {
     private boolean underlineMAIL = false;
     private boolean underlineCUSTOM = false;
     private ClickListener clickListener;
+
+    // custom
+    public void setRegexCUSTOM(String regexCUSTOM){
+        this.regexCUSTOM = regexCUSTOM;
+    }
 
     // colors
     public void setColorTAG(int colorTAG){
@@ -50,14 +59,19 @@ public class WordToSpan {
         this.colorMAIL = colorMAIL;
     }
 
-    // custom
     public void setColorCUSTOM(int colorCUSTOM){
         this.colorCUSTOM = colorCUSTOM;
     }
 
-    public void setRegexCUSTOM(String regexCUSTOM){
-        this.regexCUSTOM = regexCUSTOM;
+    public void setColorHIGHLIGHT(int colorHIGHLIGHT){
+        this.colorHIGHLIGHT = colorHIGHLIGHT;
     }
+
+    // background
+    public void setBackgroundHIGHLIGHT(int backgroundHIGHLIGHT){
+        this.backgroundHIGHLIGHT = backgroundHIGHLIGHT;
+    }
+
 
     // underline
     public void setUnderlineTAG(boolean underlineTAG){
@@ -85,8 +99,8 @@ public class WordToSpan {
         this.clickListener = clickListener;
     }
 
-    // converter
-    public void setText(String txt, View textView) {
+    // create link
+    public void setLink(String txt, View textView) {
         Spannable ws = new SpannableString(txt);
 
         Matcher matcherTAG = Pattern.compile("(^|\\s+)#(\\w+)").matcher(txt);
@@ -131,6 +145,34 @@ public class WordToSpan {
         tv.setText(ws);
         tv.setMovementMethod(LinkMovementMethod.getInstance());
         tv.setHighlightColor(Color.TRANSPARENT);
+    }
+
+    // create highlight
+    public void setHighlight(String txt, String key, View textView) {
+        Spannable ws = new SpannableString(txt);
+
+        if(!key.isEmpty()) {
+            Matcher matcherONE = Pattern.compile("(?i)" + key.trim()).matcher(txt);
+            while (matcherONE.find()) {
+                int st = matcherONE.start();
+                int en = st + matcherONE.group(0).length();
+                ws.setSpan(new ForegroundColorSpan(colorHIGHLIGHT), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                ws.setSpan(new BackgroundColorSpan(backgroundHIGHLIGHT), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            for (String retval: key.split(" ")) {
+                Matcher matcherALL = Pattern.compile("(?i)" + retval.trim()).matcher(txt);
+                while (matcherALL.find()) {
+                    int st = matcherALL.start();
+                    int en = st + matcherALL.group(0).length();
+                    ws.setSpan(new ForegroundColorSpan(colorHIGHLIGHT), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    ws.setSpan(new BackgroundColorSpan(backgroundHIGHLIGHT), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+            }
+        }
+
+        // set text
+        TextView tv = (TextView) textView;
+        tv.setText(ws);
     }
 
     // interface
