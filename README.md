@@ -1,4 +1,7 @@
 # Android-WordToSpan
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-WordToSpan-red.svg?style=flat)](https://android-arsenal.com/details/1/6101)
+[![Release](https://jitpack.io/v/bachors/Android-WordToSpan.svg)](https://jitpack.io/#bachors/Android-WordToSpan)
+
 Small &amp; simple library to create a link url, mail, mention and tag in textView.
 
 ![gif](http://i.giphy.com/3o7qiVzv4pGAbBaCUU.gif)
