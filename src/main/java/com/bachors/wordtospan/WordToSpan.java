@@ -26,6 +26,7 @@ public class WordToSpan {
     private int colorMENTION = Color.BLUE;
     private int colorURL = Color.BLUE;
     private int colorMAIL = Color.BLUE;
+    private int colorPHONE = Color.BLUE;
     private int colorCUSTOM = Color.BLUE;
     private int colorHIGHLIGHT = Color.WHITE;
     private int backgroundHIGHLIGHT = Color.BLUE;
@@ -34,6 +35,7 @@ public class WordToSpan {
     private boolean underlineMENTION = false;
     private boolean underlineURL = false;
     private boolean underlineMAIL = false;
+    private boolean underlinePHONE = false;
     private boolean underlineCUSTOM = false;
     private ClickListener clickListener;
 
@@ -57,6 +59,10 @@ public class WordToSpan {
 
     public void setColorMAIL(int colorMAIL){
         this.colorMAIL = colorMAIL;
+    }
+
+    public void setColorPHONE(int colorPHONE){
+        this.colorPHONE = colorPHONE;
     }
 
     public void setColorCUSTOM(int colorCUSTOM){
@@ -88,6 +94,10 @@ public class WordToSpan {
 
     public void setUnderlineMAIL(boolean underlineMAIL){
         this.underlineMAIL = underlineMAIL;
+    }
+
+    public void setUnderlinePHONE(boolean underlinePHONE){
+        this.underlinePHONE = underlinePHONE;
     }
 
     public void setUnderlineCUSTOM(boolean underlineCUSTOM){
@@ -129,6 +139,13 @@ public class WordToSpan {
             int st = matcherMAIL.start();
             int en = st + matcherMAIL.group(0).length();
             ws.setSpan(new myClickableSpan(colorMAIL, underlineMAIL, "mail"), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        Matcher matcherPHONE = Pattern.compile("\\d{13}|\\d{12}|\\d{11}|\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}").matcher(txt);
+        while(matcherPHONE.find()){
+            int st = matcherPHONE.start();
+            int en = st + matcherPHONE.group(0).length();
+            ws.setSpan(new myClickableSpan(colorPHONE, underlinePHONE, "phone"), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         if(regexCUSTOM != null && !regexCUSTOM.isEmpty()) {
