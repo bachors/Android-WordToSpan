@@ -37,6 +37,7 @@ Create Link
 // set color link. Default = Color.BLUE
 WTS.setColorTAG(Color.GREEN);
 WTS.setColorURL(Color.MAGENTA);
+WTS.setColorPHONE(Color.RED);
 WTS.setColorMAIL(getResources().getColor(R.color.colorPrimary));
 WTS.setColorMENTION(getResources().getColor(R.color.colorAccent));
 
@@ -58,7 +59,7 @@ WTS.setLink(myText, TV);
 WTS.setClickListener(new WordToSpan.ClickListener() {
 	@Override
 	public void onClick(String type, String text) {
-		// type: "tag", "mail", "url" or "mention"
+		// type: "tag", "mail", "url", "phone", "mention" or "custom"
 		Toast.makeText(getApplicationContext(), "Type: " + type + "\nText: " + text, Toast.LENGTH_LONG).show();
 	}
 });
