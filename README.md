@@ -81,5 +81,8 @@ TextView TV = (TextView)findViewById(R.id.txt);
 WTS.setHighlight(myText, keyWord, TV);
 ```
 
+<a href="https://play.google.com/store/apps/details?id=com.bachors.downgram">Demo</a> application that uses this library.
+-------------------------------------------------------------------------------------
+
 MIT
 ---
