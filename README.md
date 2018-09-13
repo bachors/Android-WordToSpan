@@ -17,7 +17,7 @@ allprojects {
 ```
 dependencies {
     ...
-    compile 'com.github.bachors:Android-WordToSpan:2.1'
+    compile 'com.github.bachors:Android-WordToSpan:3.0'
 }
 ```
 
