@@ -21,48 +21,30 @@ dependencies {
 }
 ```
 
-Usage
------
-```java
-...
-
-WordToSpan WTS = new WordToSpan();
-```
-
 Create Link
 -----
 ![gif](http://i.giphy.com/3o7qiVzv4pGAbBaCUU.gif)
 
 ```java
-// set color link. Default = Color.BLUE
-WTS.setColorTAG(Color.GREEN);
-WTS.setColorURL(Color.MAGENTA);
-WTS.setColorPHONE(Color.RED);
-WTS.setColorMAIL(getResources().getColor(R.color.colorPrimary));
-WTS.setColorMENTION(getResources().getColor(R.color.colorAccent));
-
-/* add custom
-// WTS.setRegexCUSTOM("([0-9]+-[0-9]+)");
-// WTS.setColorCUSTOM(Color.YELLOW);
-*/
-
-// set underline link. Default = false
-// WTS.setUnderlineTAG(true);
-WTS.setUnderlineURL(true);
-
-// create link
 String myText = "I know http://just.com/anu how to @whisper, And I #know just #how to cry,I know just @where to anu@find.com the answers";
-TextView TV = (TextView)findViewById(R.id.txt);
-WTS.setLink(myText, TV);
+TextView tv = (TextView)findViewById(R.id.tx);
 
-// click listener
-WTS.setClickListener(new WordToSpan.ClickListener() {
-	@Override
-	public void onClick(String type, String text) {
-		// type: "tag", "mail", "url", "phone", "mention" or "custom"
-		Toast.makeText(getApplicationContext(), "Type: " + type + "\nText: " + text, Toast.LENGTH_LONG).show();
-	}
-});
+WordToSpan link = new WordToSpan();
+link.setColorTAG(Color.GREEN)
+	.setColorURL(Color.MAGENTA)
+	.setColorPHONE(Color.RED)
+	.setColorMAIL(getResources().getColor(R.color.colorPrimary))
+	.setColorMENTION(getResources().getColor(R.color.colorAccent))
+	.setUnderlineURL(true)
+	.setLink(myText)
+	.into(tv)
+	.setClickListener(new WordToSpan.ClickListener() {
+		@Override
+		public void onClick(String type, String text) {
+			// type: "tag", "mail", "url", "phone", "mention" or "custom"
+			Toast.makeText(getApplication(), "Type: " + type + "\nText: " + text, Toast.LENGTH_LONG).show();
+		}
+	});
 ```
 
 Create Highlight
@@ -70,19 +52,16 @@ Create Highlight
 ![gif](http://i.giphy.com/3ohhwpbkD8NRGefEyY.gif)
 
 ```java
-// settings
-WTS.setBackgroundHIGHLIGHT(Color.YELLOW); // Default = Color.BLUE
-WTS.setColorHIGHLIGHT(Color.RED); // Default = Color.WHITE
-
-// create highlighter
 String myText = "Any code and resources in the Android library anywhere love code.";
 String keyWord = "any code";
-TextView TV = (TextView)findViewById(R.id.txt);
-WTS.setHighlight(myText, keyWord, TV);
-```
+TextView tv = (TextView)findViewById(R.id.tx);
 
-<a href="https://play.google.com/store/apps/details?id=com.bachors.downgram">Demo</a> application that uses this library.
--------------------------------------------------------------------------------------
+WordToSpan highlight = new WordToSpan();
+highlight.setBackgroundHIGHLIGHT(Color.YELLOW)
+	.setColorHIGHLIGHT(Color.RED)
+	.setHighlight(myText, keyWord)
+	.into(tv);
+```
 
 MIT
 ---
