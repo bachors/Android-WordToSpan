@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by Bachors on 8/23/2017.
+ * Created by bachors on 9/13/2018.
  * https://github.com/bachors/Android-WordToSpan
  */
 
@@ -38,114 +38,127 @@ public class WordToSpan {
     private boolean underlinePHONE = false;
     private boolean underlineCUSTOM = false;
     private ClickListener clickListener;
+    private TextView tv;
+    private Spannable ws;
+    private String key = null;
 
     // custom
-    public void setRegexCUSTOM(String regexCUSTOM){
+    public WordToSpan setRegexCUSTOM(String regexCUSTOM){
         this.regexCUSTOM = regexCUSTOM;
+        return this;
     }
 
     // colors
-    public void setColorTAG(int colorTAG){
+    public WordToSpan setColorTAG(int colorTAG){
         this.colorTAG = colorTAG;
+        return this;
     }
 
-    public void setColorMENTION(int colorMENTION){
+    public WordToSpan setColorMENTION(int colorMENTION){
         this.colorMENTION = colorMENTION;
+        return this;
     }
 
-    public void setColorURL(int colorURL){
+    public WordToSpan setColorURL(int colorURL){
         this.colorURL = colorURL;
+        return this;
     }
 
-    public void setColorMAIL(int colorMAIL){
+    public WordToSpan setColorMAIL(int colorMAIL){
         this.colorMAIL = colorMAIL;
+        return this;
     }
 
-    public void setColorPHONE(int colorPHONE){
+    public WordToSpan setColorPHONE(int colorPHONE){
         this.colorPHONE = colorPHONE;
+        return this;
     }
 
-    public void setColorCUSTOM(int colorCUSTOM){
+    public WordToSpan setColorCUSTOM(int colorCUSTOM){
         this.colorCUSTOM = colorCUSTOM;
+        return this;
     }
 
-    public void setColorHIGHLIGHT(int colorHIGHLIGHT){
+    public WordToSpan setColorHIGHLIGHT(int colorHIGHLIGHT){
         this.colorHIGHLIGHT = colorHIGHLIGHT;
+        return this;
     }
 
     // background
-    public void setBackgroundHIGHLIGHT(int backgroundHIGHLIGHT){
+    public WordToSpan setBackgroundHIGHLIGHT(int backgroundHIGHLIGHT){
         this.backgroundHIGHLIGHT = backgroundHIGHLIGHT;
+        return this;
     }
 
 
     // underline
-    public void setUnderlineTAG(boolean underlineTAG){
+    public WordToSpan setUnderlineTAG(boolean underlineTAG){
         this.underlineTAG = underlineTAG;
+        return this;
     }
 
-    public void setUnderlineMENTION(boolean underlineMENTION){
+    public WordToSpan setUnderlineMENTION(boolean underlineMENTION){
         this.underlineMENTION = underlineMENTION;
+        return this;
     }
 
-    public void setUnderlineURL(boolean underlineURL){
+    public WordToSpan setUnderlineURL(boolean underlineURL){
         this.underlineURL = underlineURL;
+        return this;
     }
 
-    public void setUnderlineMAIL(boolean underlineMAIL){
+    public WordToSpan setUnderlineMAIL(boolean underlineMAIL){
         this.underlineMAIL = underlineMAIL;
+        return this;
     }
 
-    public void setUnderlinePHONE(boolean underlinePHONE){
+    public WordToSpan setUnderlinePHONE(boolean underlinePHONE){
         this.underlinePHONE = underlinePHONE;
+        return this;
     }
 
-    public void setUnderlineCUSTOM(boolean underlineCUSTOM){
+    public WordToSpan setUnderlineCUSTOM(boolean underlineCUSTOM){
         this.underlineCUSTOM = underlineCUSTOM;
-    }
-
-    // listener
-    public void setClickListener(ClickListener clickListener) {
-        this.clickListener = clickListener;
+        return this;
     }
 
     // create link
-    public void setLink(String txt, View textView) {
-        Spannable ws = new SpannableString(txt);
+    public WordToSpan setLink(String txt) {
+        this.ws = new SpannableString(txt);
 
         Matcher matcherTAG = Pattern.compile("(^|\\s+)#(\\w+)").matcher(txt);
         while(matcherTAG.find()){
             int st = matcherTAG.start();
             int en = st + matcherTAG.group(0).length();
-            ws.setSpan(new myClickableSpan(colorTAG, underlineTAG, "tag"), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            this.ws.setSpan(new myClickableSpan(colorTAG, underlineTAG, "tag"), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         Matcher matcherMENTION = Pattern.compile("(^|\\s+)@(\\w+)").matcher(txt);
         while(matcherMENTION.find()){
             int st = matcherMENTION.start();
             int en = st + matcherMENTION.group(0).length();
-            ws.setSpan(new myClickableSpan(colorMENTION, underlineMENTION, "mention"), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            this.ws.setSpan(new myClickableSpan(colorMENTION, underlineMENTION, "mention"), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         Matcher matcherURL = Pattern.compile("(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]").matcher(txt);
         while(matcherURL.find()){
             int st = matcherURL.start();
             int en = st + matcherURL.group(0).length();
-            ws.setSpan(new myClickableSpan(colorURL, underlineURL, "url"), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            this.ws.setSpan(new myClickableSpan(colorURL, underlineURL, "url"), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         Matcher matcherMAIL = Pattern.compile("([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\\.[a-zA-Z0-9._-]+)").matcher(txt);
         while(matcherMAIL.find()){
             int st = matcherMAIL.start();
             int en = st + matcherMAIL.group(0).length();
-            ws.setSpan(new myClickableSpan(colorMAIL, underlineMAIL, "mail"), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            this.ws.setSpan(new myClickableSpan(colorMAIL, underlineMAIL, "mail"), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         Matcher matcherPHONE = Pattern.compile("\\d{13}|\\d{12}|\\d{11}|\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}").matcher(txt);
         while(matcherPHONE.find()){
             int st = matcherPHONE.start();
             int en = st + matcherPHONE.group(0).length();
-            ws.setSpan(new myClickableSpan(colorPHONE, underlinePHONE, "phone"), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            this.ws.setSpan(new myClickableSpan(colorPHONE, underlinePHONE, "phone"), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         if(regexCUSTOM != null && !regexCUSTOM.isEmpty()) {
@@ -153,43 +166,52 @@ public class WordToSpan {
             while (matcherCUSTOM.find()) {
                 int st = matcherCUSTOM.start();
                 int en = st + matcherCUSTOM.group(0).length();
-                ws.setSpan(new myClickableSpan(colorCUSTOM, underlineCUSTOM, "custom"), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                this.ws.setSpan(new myClickableSpan(colorCUSTOM, underlineCUSTOM, "custom"), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
 
-        // set text
-        TextView tv = (TextView) textView;
-        tv.setText(ws);
-        tv.setMovementMethod(LinkMovementMethod.getInstance());
-        tv.setHighlightColor(Color.TRANSPARENT);
+        return this;
+    }
+
+    // listener
+    public void setClickListener(ClickListener clickListener) {
+        this.clickListener = clickListener;
     }
 
     // create highlight
-    public void setHighlight(String txt, String key, View textView) {
-        Spannable ws = new SpannableString(txt);
+    public WordToSpan setHighlight(String txt, String ky) {
+        this.key = ky;
+        this.ws = new SpannableString(txt);
 
         if(!key.isEmpty()) {
             Matcher matcherONE = Pattern.compile("(?i)" + key.trim()).matcher(txt);
             while (matcherONE.find()) {
                 int st = matcherONE.start();
                 int en = st + matcherONE.group(0).length();
-                ws.setSpan(new ForegroundColorSpan(colorHIGHLIGHT), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                ws.setSpan(new BackgroundColorSpan(backgroundHIGHLIGHT), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                this.ws.setSpan(new ForegroundColorSpan(colorHIGHLIGHT), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                this.ws.setSpan(new BackgroundColorSpan(backgroundHIGHLIGHT), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             for (String retval: key.split(" ")) {
                 Matcher matcherALL = Pattern.compile("(?i)" + retval.trim()).matcher(txt);
                 while (matcherALL.find()) {
                     int st = matcherALL.start();
                     int en = st + matcherALL.group(0).length();
-                    ws.setSpan(new ForegroundColorSpan(colorHIGHLIGHT), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    ws.setSpan(new BackgroundColorSpan(backgroundHIGHLIGHT), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    this.ws.setSpan(new ForegroundColorSpan(colorHIGHLIGHT), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    this.ws.setSpan(new BackgroundColorSpan(backgroundHIGHLIGHT), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
             }
         }
+        return this;
+    }
 
-        // set text
-        TextView tv = (TextView) textView;
+    public WordToSpan into(View textView){
+        tv = (TextView) textView;
         tv.setText(ws);
+        if(key == null) {
+            tv.setMovementMethod(LinkMovementMethod.getInstance());
+            tv.setHighlightColor(Color.TRANSPARENT);
+        }
+        return this;
     }
 
     // interface
@@ -211,7 +233,6 @@ public class WordToSpan {
 
         @Override
         public void onClick(View textView) {
-            TextView tv = (TextView) textView;
             Spanned s = (Spanned) tv.getText();
             int start = s.getSpanStart(this);
             int end = s.getSpanEnd(this);
